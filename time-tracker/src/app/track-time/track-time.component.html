@@ -1,0 +1,52 @@
+<div *ngIf="tasks !== null && tasks !== undefined && tasks.length > 0">
+    <div *ngFor="let obj of tasks;">
+        <div class="taskDiv">
+            <span class="paddingDiv headingText"> {{ obj.taskName }} </span>
+            <span class="floatRight headingText timerMargin"> <span style="color: #bdbdbd"> | </span> <span class="currentTimer">{{obj.timer}}</span>
+            <span *ngIf="!obj.isTaskActive"> <button class="saveButton" (click)="onStartTimer(obj.taskName)" type="button">Start</button></span>
+            <span *ngIf="obj.isTaskActive">
+            <button class="stopButton" (click)="onStopTimer(obj.taskName)">Stop</button>
+            </span>
+            <span class="closeDiv1" (click)="deleteTask(obj.taskName)"></span>
+            </span>
+            <div class="historyText"><b>History</b></div>
+            <div class="paddingDiv" style="margin-bottom: -1em" *ngIf="obj.isTaskActive">
+                Started the Timer at {{obj.taskStartedTime.toLocaleString()}} (Active)
+            </div>
+            <div class="paddingDiv" *ngIf="obj.taskList.length > 0">
+                <div *ngFor="let task of obj.taskList;let indexOfTask=index;">
+                    Started the Timer at {{task.startTime}} and stopped at {{task.endTime}} and total time is {{task.totalTime}}
+                </div>
+            </div>
+            <div class="paddingDiv" *ngIf="obj.taskList.length === 0">
+                No History Found, click on the start button to track the timer.
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="addDiv" (click)="showDialog()" title="Open Dialog"></div>
+
+<div class="dialog" *ngIf="display">
+    <div class="dialog-content">
+        <div class="closeDiv" (click)="closeDialog()"></div>
+        <form [formGroup]="taskForm">
+            <div class="dialogContainer">
+                <div class="p-field">
+                    <label for="taskName">Enter the Task Name</label>
+                    <br>
+                    <div class="taskInput">
+                        <input type="text" id="taskName" pInputText class="form-control" formControlName="taskName" required/>
+                    </div>
+                    <small *ngIf="taskForm.controls['taskName'].hasError('required')" class="error">
+          Task Name is required.
+        </small>
+                    <small *ngIf="taskExist" class="error">
+          Task Name Already exist please change the name.
+        </small>
+                </div>
+            </div>
+        </form>
+        <button class="saveButton" (click)="saveTask()">Save</button>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+.header {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.logoImg {
+    height: 31px;
+    width: 192px;
+    margin-left: 80px;
+    margin-right: 10px;
+}
+
+.totalTime {
+  float: right;
+  margin-top: 6px
+}
